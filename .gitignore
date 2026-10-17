@@ -1,0 +1,8 @@
+﻿archive/
+datasetsih/
+dataset/
+*.parquet
+*.csv
+*.log
+__pycache__/
+.vscode/
