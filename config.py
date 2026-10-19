@@ -13,8 +13,8 @@ RAW_PARQUET_TEST = "dataset_frozen_test.parquet"
 PARQUET_TRAIN = "dataset_frozen_train_dedup.parquet"
 PARQUET_VAL = "dataset_frozen_val_dedup.parquet"
 PARQUET_TEST = "dataset_frozen_test_dedup.parquet"
-ARTEFAK_FITUR = "fitur_terpilih_44.json"
-ARTEFAK_MODEL = "model_lgb_final_44fitur.txt"
+ARTEFAK_FITUR = os.path.join("models", "fitur_terpilih_44.json")
+ARTEFAK_MODEL = os.path.join("models", "model_lgb_final_44fitur.txt")
 ARTEFAK_FROZE_LOG = "audit_froze_summary.json"
 ARTEFAK_DEDUP_LOG = "audit_dedup_summary.json"
 ARTEFAK_TES_LOCK = "audit_tes_resmi_locked.json"
@@ -57,6 +57,7 @@ def rapikan_kolom(kolom_df):
     bersih = [str(c).strip() for c in kolom_df]
     return [ALIAS_KOLOM.get(c, c) for c in bersih]
 
+
 def pilih_kolom(kolom_df, target_fitur):
     set_kolom = set(kolom_df)
     kebalikan_alias = {v: k for k, v in ALIAS_KOLOM.items()}
@@ -78,6 +79,7 @@ def ambil_fitur():
         with open(ARTEFAK_FITUR, "r", encoding="utf-8") as f:
             data = json.load(f)
             return data["features"] if isinstance(data, dict) and "features" in data else data
+    os.makedirs(os.path.dirname(ARTEFAK_FITUR), exist_ok=True)
     with open(ARTEFAK_FITUR, "w", encoding="utf-8") as f:
         json.dump(FITUR, f, indent=2)
     return FITUR
